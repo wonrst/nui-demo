@@ -19,17 +19,19 @@ using System;
 using System.Threading.Tasks;
 using Tizen.NUI;
 using Tizen.NUI.BaseComponents;
+using Tizen.NUI.Components;
 
 namespace HelloWorldTest
 {
     class Example : NUIApplication
     {
         private Animation _animation;
-        private TextLabel _text;
         private int cnt;
         private View _view;
-        TextField textFieldPlaceholderTest;
-        TextLabel keySubclassTest;
+        TextField textField;
+        TextField newTextField;
+        public bool hidden;
+
 
         protected override void OnCreate()
         {
@@ -37,10 +39,10 @@ namespace HelloWorldTest
             Initialize();
         }
 
-        TextLabel pixelLabel;
         TextLabel pointLabel;
         public void Initialize()
         {
+            hidden = true;
             Window window = Window.Instance;
             window.BackgroundColor = Color.White;
             window.TouchEvent += OnWindowTouched;
@@ -50,18 +52,17 @@ namespace HelloWorldTest
                 Tizen.Log.Fatal("NUI", "Height: " + e.WindowSize.Height);
                 Tizen.Log.Fatal("NUI", "Width: " + e.WindowSize.Width);
             };
-
-            pixelLabel = new TextLabel("NUI Ubuntu Test! Click with mouse!");
-            pixelLabel.Position2D = new Position2D(10, 10);
-            pixelLabel.BackgroundColor = Color.Yellow;
-            pixelLabel.PointSize = 20;
-            pixelLabel.TextColor = Color.Blue;
-            window.Add(pixelLabel);
-
+/*
             pointLabel = new TextLabel("Test Point Size 32.0f");
             pointLabel.Position2D = new Position2D(10, 70);
-            pointLabel.PointSize = 32.0f;
+            pointLabel.Size2D = new Size2D(300, 150);
+
+            pointLabel.PointSize = 30.0f;
+            pointLabel.BackgroundColor = Color.Red;
             window.Add(pointLabel);
+            pointLabel.Padding = new Extents(50, 50, 30, 30);
+            pointLabel.Ellipsis = false;
+            pointLabel.MultiLine = true;
 /*
             Timer timer = new Timer(1000);
 
@@ -84,26 +85,96 @@ namespace HelloWorldTest
                 }
             }).Wait();
 */
-            TextField textFieldEllipsisTest = new TextField();
-            textFieldEllipsisTest.Text = "TextField Ellipsis Test, ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            textFieldEllipsisTest.Size2D = new Size2D(200, 100);
-            textFieldEllipsisTest.Position2D = new Position2D(10, 150);
-            textFieldEllipsisTest.PointSize = 30.0f;
-            textFieldEllipsisTest.Ellipsis = false;
-            window.Add(textFieldEllipsisTest);
-
-            TextField textFieldEllipsisTest2 = new TextField();
-            textFieldEllipsisTest2.Text = "TextField Ellipsis Test, ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            textFieldEllipsisTest2.Size2D = new Size2D(200, 100);
-            textFieldEllipsisTest2.Position2D = new Position2D(300, 150);
-            textFieldEllipsisTest2.PointSize = 30.0f;
-            textFieldEllipsisTest2.Ellipsis = true;
-            window.Add(textFieldEllipsisTest2);
 
 
-            textFieldPlaceholderTest = new TextField();
+/*
+            textField = new TextField();
+            textField.Text = "HELLO! this is wonrst test..!!";
 
-            PropertyMap propertyMap = new PropertyMap();
+            textField.PixelSize = 22;
+            
+            //HiddenInputModeType.HideAll;
+
+            PropertyMap hiddenMap = new PropertyMap();
+            hiddenMap.Add(HiddenInputProperty.Mode, new PropertyValue((int)HiddenInputModeType.HideAll));
+
+            //hiddenMap.Add(HiddenInputProperty.Mode, new PropertyValue((int)HiddenInputModeType.ShowLastCharacter));
+            //hiddenMap.Add(HiddenInputProperty.ShowLastCharacterDuration, new PropertyValue(1000));
+            //hiddenMap.Add(HiddenInputProperty.SubstituteCount, new PropertyValue(4));
+            //hiddenMap.Add(HiddenInputProperty.SubstituteCharacter, new PropertyValue("*"));
+            //hiddenMap.Add(HiddenInputProperty.SubstituteCharacter, new PropertyValue(0x23));
+            //textField.HiddenInputSettings = hiddenMap;
+
+            //PropertyMap showMap = new PropertyMap();
+            //showMap.Add(HiddenInputProperty.Mode, new PropertyValue((int)HiddenInputModeType.HideNone));
+
+            var pwdBtn = new Button();
+            pwdBtn.Text = "o";
+            //pwdBtn.ParentOrigin = ParentOrigin.CenterRight;
+            //pwdBtn.PivotPoint = PivotPoint.CenterRight;
+            //pwdBtn.PositionUsesPivotPoint = true;
+            pwdBtn.Position2D = new Position2D(80, 0);
+            pwdBtn.Size = new Size(50, 50);
+            /*
+            btn.ParentOrigin = ParentOrigin.CenterRight;
+            btn.PivotPoint = PivotPoint.CenterRight;
+            btn.PositionUsesPivotPoint = true;
+            */
+
+/*
+            pwdBtn.Clicked += (sender, e) =>
+            {
+                textField.Padding = new Extents(20, 20, 5, 5);
+                Tizen.Log.Fatal("NUI", "SIZE " + textField.Size2D.Width + " " + textField.Size2D.Height + " \n");
+                if (hidden)
+                {
+                    //textField.HiddenInputSettings = showMap;
+                    textField.Text = textField.Text;
+                    hidden = false;
+                }
+                else
+                {
+                    //textField.HiddenInputSettings = hiddenMap;
+                    textField.Text = textField.Text;
+                    hidden = true;
+                }
+            };
+            window.Add(pwdBtn);
+
+            var clearBtn = new Button();
+            clearBtn.Text = "x";
+            //clearBtn.ParentOrigin = ParentOrigin.CenterRight;
+            //clearBtn.PivotPoint = PivotPoint.CenterRight;
+            //clearBtn.PositionUsesPivotPoint = true;
+            clearBtn.Size = new Size(50, 50);
+            clearBtn.Clicked += (sender, e) =>
+            {
+                textField.Text = "";
+
+                textField.Padding = new Extents(50, 50, 0, 0);
+                Tizen.Log.Fatal("NUI", "SIZE " + textField.Size2D.Width + " " + textField.Size2D.Height + " \n");
+
+            };
+
+            window.Add(clearBtn);
+
+            textField.TextChanged += (sender, e) =>
+            {
+                Tizen.Log.Fatal("NUI", "TEXT CHANGED..!! \n");
+
+                if (String.IsNullOrEmpty(textField.Text))
+                {
+                    clearBtn.Hide();
+                }
+                else
+                {
+                    clearBtn.Show();
+                }
+            };
+
+
+
+            /*
             propertyMap.Add("placeholderText", new PropertyValue("TextField Placeholder Test"));
             propertyMap.Add("placeholderTextFocused", new PropertyValue("Placeholder Text Focused"));
             propertyMap.Add("placeholderColor", new PropertyValue(Color.Blue));
@@ -114,40 +185,198 @@ namespace HelloWorldTest
             fontStyleMap.Add("width", new PropertyValue("condensed"));
             fontStyleMap.Add("slant", new PropertyValue("italic"));
             propertyMap.Add("placeholderFontStyle", new PropertyValue(fontStyleMap));
-
-            textFieldPlaceholderTest.Size2D = new Size2D(300, 50);
-            textFieldPlaceholderTest.Position2D = new Position2D(10, 230);
-            textFieldPlaceholderTest.BackgroundColor = Color.Magenta;
-            textFieldPlaceholderTest.Placeholder = propertyMap;
-            textFieldPlaceholderTest.Focusable = true;
-            window.Add(textFieldPlaceholderTest);
-
-            keySubclassTest = new TextLabel();
-            keySubclassTest.Text = "Key Subclass Test!";
-            keySubclassTest.Size2D = new Size2D(900, 50);
-            keySubclassTest.Position2D = new Position2D(10, 300);
-            keySubclassTest.BackgroundColor = Color.Cyan;
-            keySubclassTest.PointSize = 20;
-            keySubclassTest.Focusable = true;
-            window.Add(keySubclassTest);
+*/
+/*
+            textField.Size2D = new Size2D(300, 50);
+            textField.Position2D = new Position2D(10, 230);
+            textField.BackgroundColor = Color.Magenta;
+            //textField.Placeholder = propertyMap;
+            textField.Focusable = true;
+            window.Add(textField);
 
 
-            TextLabel autoScrollStopMode = new TextLabel("AutoScrollStopMode is finish-loop. PointSize=30");
-            autoScrollStopMode.Size2D = new Size2D(400, 100);
-            autoScrollStopMode.Position2D = new Position2D(10, 400);
-            autoScrollStopMode.PointSize = 30.0f;
-            autoScrollStopMode.AutoScrollStopMode = AutoScrollStopMode.Immediate;
-            autoScrollStopMode.AutoScrollLoopDelay = 3.0f;
-            autoScrollStopMode.EnableAutoScroll = true;
-            autoScrollStopMode.AutoScrollLoopCount = 0;
-            window.Add(autoScrollStopMode);
 
-            _text = new TextLabel("Hello NUI World");
-            _text.Position2D = new Position2D(10, 500);
-            _text.HorizontalAlignment = HorizontalAlignment.Center;
-            _text.PointSize = 20.0f;
-            _text.TextColor = Color.Magenta;
-            window.Add(_text);
+            newTextField = new TextField();
+//            newTextField.Text = "Key Subclass Test!";
+            newTextField.Text = "&#x262a;&#xfe0f;";
+            newTextField.Size2D = new Size2D(300, 50);
+            newTextField.Position2D = new Position2D(10, 300);
+            newTextField.BackgroundColor = Color.Cyan;
+            newTextField.PointSize = 20;
+            newTextField.Focusable = true;
+            newTextField.EnableMarkup = true;
+
+            //newTextField.EnableClearButton = true;
+            //newTextField.EnablePasswordButton = true;
+
+
+            newTextField.Padding = new Extents(100, 50, 0, 0);
+
+
+            window.Add(newTextField);
+
+
+            Tizen.Log.Fatal("NUI", "SIZE " + newTextField.Size2D.Width + " " + newTextField.Size2D.Height + " \n");
+
+
+
+            //textField.Padding = new Extents(50, 50, 0, 0);
+
+            //textField.InnerPadding = new Extents(20, 20, 0, 0);
+            //textField.EnableInnerPadding = true;
+
+
+            //WONRST
+            //textField.EnableClearButton = true;
+            //textField.EnablePasswordButton = true;
+
+
+
+            //newTextField.Padding = new Extents(100, 50, 0, 0);
+
+
+            var newBtn = new Button();
+            newBtn.Text = "get size";
+            newBtn.ParentOrigin = ParentOrigin.CenterRight;
+            newBtn.PivotPoint = PivotPoint.CenterRight;
+            newBtn.PositionUsesPivotPoint = true;
+            newBtn.Size = new Size(100, 50);
+            newBtn.Clicked += (sender, e) =>
+            {
+                textField.Padding = new Extents(100, 50, 5, 5);
+                Tizen.Log.Fatal("NUI", "SIZE " + textField.Size2D.Width + " " + textField.Size2D.Height + " \n");
+
+                Tizen.Log.Fatal("NUI", "LABEL SIZE " + pointLabel.Size2D.Width + " " + pointLabel.Size2D.Height + " \n");
+
+                Tizen.Log.Fatal("NUI", "PAD " + textField.Padding.Start + " " + textField.Padding.End + " \n");
+            };
+
+            window.Add(newBtn);
+
+
+            var newBtn2 = new Button();
+            newBtn2.Text = "vis/invis";
+            newBtn2.Position2D = new Position2D(50, 400);
+            newBtn2.Size = new Size(100, 50);
+            newBtn2.Clicked += (sender, e) =>
+            {
+                if (textField.EnableClearButton) textField.EnableClearButton = false;
+                else textField.EnableClearButton = true;
+            };
+
+            window.Add(newBtn2);
+
+            var newBtn3 = new Button();
+            newBtn3.Text = "no pad";
+            newBtn3.Position2D = new Position2D(50, 450);
+            newBtn3.Size = new Size(100, 50);
+            newBtn3.Clicked += (sender, e) =>
+            {
+                textField.Padding = new Extents(0, 0, 0, 0);
+            };
+
+            window.Add(newBtn3);
+
+
+            var newBtn4 = new Button();
+            newBtn4.Text = "eye";
+            newBtn4.Position2D = new Position2D(50, 500);
+            newBtn4.Size = new Size(100, 50);
+            newBtn4.Clicked += (sender, e) =>
+            {
+                if (textField.EnablePasswordButton)
+                {
+                    textField.EnablePasswordButton = false;
+                }
+                else
+                {
+                    textField.EnablePasswordButton = true;
+                }
+            };
+
+            window.Add(newBtn4);
+
+
+            var newBtn5 = new Button();
+            newBtn5.Text = "property";
+            newBtn5.Position2D = new Position2D(50, 550);
+            newBtn5.Size = new Size(100, 50);
+            newBtn5.Clicked += (sender, e) =>
+            {
+                var map = new PropertyMap();
+                map.Add(HiddenInputProperty.Mode, new PropertyValue((int)HiddenInputModeType.HideAll));
+                textField.HiddenInputSettings = map;
+                textField.Text = textField.Text;
+            };
+
+            window.Add(newBtn5);
+
+/*
+            var button = new Button();
+            button.Text = "Hello";
+            button.Size = new Size(120, 80);
+ 
+            window.Add(button);
+*/
+
+            TextEditor myTextEditor;
+
+            myTextEditor = new TextEditor();
+            //myTextEditor.Position2D = new Position2D(10, 700);
+            myTextEditor.Position2D = new Position2D(10, 1);
+            myTextEditor.Size2D = new Size2D(400, 400);
+            myTextEditor.BackgroundColor = Color.Red;
+            myTextEditor.PointSize = 20;
+            myTextEditor.TextColor = Color.White;
+            //myTextEditor.MultiLine = true;
+            myTextEditor.LineWrapMode = LineWrapMode.Character;
+            myTextEditor.Text = $"[TextEditor LineWrapMode.Character] hello ABCDEFGHI is my name, it is very very long beautiful hansome awesome name.";
+            Window.Instance.GetDefaultLayer().Add(myTextEditor);
+            //myTextEditor.Padding = new Extents(100, 100, 20, 20);
+
+
+            myTextEditor.TextChanged += (sender, e) =>
+            {
+                Tizen.Log.Fatal("NUI", "text editor CHANGED..!! \n");
+            };
+
+
+            Vector3 originalSize;
+
+            var newBtn6 = new Button();
+            newBtn6.Text = "natural";
+            newBtn6.Position2D = new Position2D(50, 650);
+            newBtn6.Size = new Size(100, 50);
+            newBtn6.Clicked += (sender, e) =>
+            {
+                Tizen.Log.Fatal("NUI", "\n-------------------------NATURAL-----------------------------\n\n");
+
+                originalSize = myTextEditor.GetNaturalSize();
+
+                Tizen.Log.Fatal("NUI", "-------------Natural Size " + originalSize.X + " " + originalSize.Y + " " + originalSize.Z + "\n");
+                
+            };
+
+            window.Add(newBtn6);
+
+
+            var newBtn7 = new Button();
+            newBtn7.Text = "natural";
+            newBtn7.Position2D = new Position2D(150, 650);
+            newBtn7.Size = new Size(100, 50);
+            newBtn7.Clicked += (sender, e) =>
+            {
+                float height = myTextEditor.GetHeightForWidth( myTextEditor.Size.Width );
+
+                Tizen.Log.Fatal("NUI", "GetHeightForWidth W " + myTextEditor.Size.Width + " H" + height + "\n");
+                
+            };
+
+            window.Add(newBtn7);
+
+
+
+
 
             _view = new View();
             _view.Size2D = new Size2D(100, 100);
@@ -158,23 +387,21 @@ namespace HelloWorldTest
             {
                 Duration = 2000
             };
-            _animation.AnimateTo(_text, "Orientation", new Rotation(new Radian(new Degree(180.0f)), PositionAxis.X), 0, 500);
-            _animation.AnimateTo(_text, "Orientation", new Rotation(new Radian(new Degree(0.0f)), PositionAxis.X), 500, 1000);
-            _animation.AnimateBy(_text, "ScaleX", 3, 1000, 1500);
-            _animation.AnimateBy(_text, "ScaleY", 4.0f, 1500, 2000);
             _animation.EndAction = Animation.EndActions.Discard;
             _animation.Finished += AnimationFinished;
 
             _view.SizeWidth = 50;
             Tizen.Log.Fatal("NUI", "[2]_view SizeWidth=" + _view.SizeWidth);
 
-            TextLabelLineWrapModeTest();
             ViewLayoutDirectionTest();
 
-            textFieldPlaceholderTest.DownFocusableView = keySubclassTest;
-            keySubclassTest.UpFocusableView = textFieldPlaceholderTest;
-            FocusManager.Instance.SetCurrentFocusView(keySubclassTest);
+
         }
+
+
+
+
+
 
 
         private View view1, view11, view12, view111, view121;
@@ -230,7 +457,7 @@ namespace HelloWorldTest
 
             if (e.Key.State == Key.StateType.Down)
             {
-                keySubclassTest.Text = $"DeviceSubClass={e.Key.DeviceSubClass}, DeviceClass={e.Key.DeviceClass}, DeviceName={e.Key.DeviceName}, KeyCode={e.Key.KeyCode}";
+                //keySubclassTest.Text = $"DeviceSubClass={e.Key.DeviceSubClass}, DeviceClass={e.Key.DeviceClass}, DeviceName={e.Key.DeviceName}, KeyCode={e.Key.KeyCode}";
 
                 switch( e.Key.KeyPressedName )
                 {
@@ -243,7 +470,6 @@ namespace HelloWorldTest
                             Tizen.Log.Fatal("NUI", "AnimationFinished added!");
                         }
 
-                        Tizen.Log.Fatal("NUI", $"LineWrapMode 1st={ myTextLabel?.LineWrapMode} 2nd={ myTextLabel2?.LineWrapMode}");
                     }
                     break;
 
@@ -286,36 +512,11 @@ namespace HelloWorldTest
             }
         }
 
-        private TextLabel myTextLabel;
-        private TextLabel myTextLabel2;
         private TextEditor myTextEditor;
         private TextEditor myTextEditor2;
         public void TextLabelLineWrapModeTest()
         {
             Tizen.Log.Fatal("NUI", "WrapModeTest START!");
-            myTextLabel = new TextLabel();
-            myTextLabel.Position2D = new Position2D(10, 600);
-            myTextLabel.Size2D = new Size2D(400, 90);
-            myTextLabel.BackgroundColor = Color.Blue;
-            myTextLabel.PointSize = 20;
-            myTextLabel.TextColor = Color.White;
-            myTextLabel.MultiLine = true;
-            myTextLabel.LineWrapMode = LineWrapMode.Character;
-            myTextLabel.Text = $"[TextLabel LineWrapMode.Character] hello ABCDEFGHI is my name, it is very very long beautiful hansome awesome name.";
-            Window.Instance.GetDefaultLayer().Add(myTextLabel);
-
-            myTextLabel2 = new TextLabel();
-            myTextLabel2.Position2D = new Position2D(450, 600);
-            myTextLabel2.Size2D = new Size2D(400, 90);
-            myTextLabel2.BackgroundColor = Color.Blue;
-            myTextLabel2.PointSize = 20;
-            myTextLabel2.TextColor = Color.White;
-            myTextLabel2.MultiLine = true;
-            myTextLabel2.LineWrapMode = LineWrapMode.Word;
-            myTextLabel2.Text = $"[TextLabel LineWrapMode.Word] hello ABCDEFGHI is my name, it is very very long beautiful hansome awesome name.";
-            Window.Instance.GetDefaultLayer().Add(myTextLabel2);
-
-            Tizen.Log.Fatal("NUI", $"TextLabel LineWrapMode 1st={ myTextLabel?.LineWrapMode} 2nd={ myTextLabel2?.LineWrapMode}");
 
             myTextEditor = new TextEditor();
             myTextEditor.Position2D = new Position2D(10, 700);
@@ -327,6 +528,7 @@ namespace HelloWorldTest
             myTextEditor.LineWrapMode = LineWrapMode.Character;
             myTextEditor.Text = $"[TextEditor LineWrapMode.Character] hello ABCDEFGHI is my name, it is very very long beautiful hansome awesome name.";
             Window.Instance.GetDefaultLayer().Add(myTextEditor);
+            myTextEditor.Padding = new Extents(100, 100, 20, 20);
 
             myTextEditor2 = new TextEditor();
             myTextEditor2.Position2D = new Position2D(450, 700);
