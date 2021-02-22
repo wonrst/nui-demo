@@ -86,18 +86,25 @@ namespace HelloWorldTest
 
 
 
-            TextLabel label5;
+            TextField label5;
             //label5 = new TextLabel("<item 'url'='icon.png' 'width'=24 'height'=24>Hello</item>");
             //label5 = new TextLabel("Hello <item 'url'='icon.png' 'width'=24 'height'=24/>");
 
-            label5 = new TextLabel("Hello <item 'url'='icon.png' 'width'=24 'height'=24/>");
-
+            label5 = new TextField();
+            //label5.Text = "<a href='https://www.google.com'>google</a>";
+            label5.Text = "hello <a href='https://www.naver.com'>naver</a>thisisisi<b>kknd</b>Hello hihi <a href='https://google.com'>google</a>hihi <b>wonrst..</b>!!! <a href='www.tizen.org'>tizen</a> !!!";
+            //label5.Text = "<a href='https://www.naver.com'>naver</a>thisisisi<b>kknd</b>Hello hihi <a href='https://google.com'>google</a>hihi <b>wonrst..</b>!!! <a href='www.tizen.org'>tizen</a> !!!";
+            
             label5.Position2D = new Position2D(10, 410);
             label5.Size2D = new Size2D(400, 60);
             label5.EnableMarkup = true;
+            label5.MaxLength = 100;
 
             label5.PointSize = 25.0f;
             label5.BackgroundColor = Color.White;
+
+            label5.AnchorTouched += textFieldAnchorTouched;
+
             window.Add(label5);
 
 
@@ -108,9 +115,11 @@ namespace HelloWorldTest
             TextLabel label4;
             //label4 = new TextLabel("<a>www.hyperlink.com</a>");
 
-            //label4 = new TextLabel("<a 'href'='https://google.com'>google</a>");
+            //label4 = new TextLabel("<a href='https://www.google.com'>google</a>");
 
-            label4 = new TextLabel("<b>kknd</b>Hello hihi <a href='https://google.com'>google</a> hihi <b>wonrst..</b>!!! <a href='www.tizen.org'>tizen</a> !!!");
+            //label4 = new TextLabel("<a href='https://review.tizen.org/gerrit/#/c/platform/core/uifw/dali-toolkit/+/252201/'>gogle</a>");
+
+            label4 = new TextLabel("hello <a href='https://www.naver.com'>naver</a>thisisisi<b>kknd</b>Hello hihi <a href='https://google.com'>google</a>hihi <b>wonrst..</b>!!! <a href='www.tizen.org'>tizen</a> !!!");
             //label4 = new TextLabel("<a href='https://google.com'/>");
 
             label4.Position2D = new Position2D(10, 310);
@@ -119,10 +128,36 @@ namespace HelloWorldTest
 
             label4.PointSize = 25.0f;
             label4.BackgroundColor = Color.White;
+
+            //label4.AnchorTouched += textLabelAnchorTouched;
+
+            label4.AnchorTouched += (sender, e) =>
+            {
+               Tizen.Log.Info("NUI", e.Href + "\n");
+               Tizen.Log.Info("NUI", e.HrefLength + "\n");
+            };
+
+
             window.Add(label4);
 
 
 
+
+
+            TextEditor label6;
+            label6 = new TextEditor();
+            //label5.Text = "<a href='https://www.google.com'>google</a>";
+            label6.Text = "hello <a href='https://www.naver.com'>naver</a>thisisisi<b>kknd</b>Hello hihi <a href='https://google.com'>google</a>hihi <b>wonrst..</b>!!! <a href='www.tizen.org'>tizen</a> 2312329183210 wewkmkewmekwqmekwqmf wqemkqwemkwm <a>TEST</a> hell.... <a href='wonrst.com'>wonrst</a> qwerdf";
+            label6.Position2D = new Position2D(10, 510);
+            label6.Size2D = new Size2D(400, 300);
+            label6.EnableMarkup = true;
+
+            label6.PointSize = 25.0f;
+            label6.BackgroundColor = Color.White;
+
+            label6.AnchorTouched += textEditorAnchorTouched;
+            
+            window.Add(label6);
 
 
 
@@ -148,6 +183,27 @@ namespace HelloWorldTest
             label5.BackgroundColor = Color.White;
             window.Add(label5);
 */
+        }
+
+        private void textLabelAnchorTouched(object sender, TextLabel.AnchorTouchedEventArgs e)
+        {
+            Tizen.Log.Error("NUI", "LABEL Anchor TEXT[" + e.TextLabel.Text + "] \n");
+            Tizen.Log.Error("NUI", "LABEL Anchor HREF[" + e.Href + "] \n");
+            Tizen.Log.Error("NUI", "LABEL Anchor HREF Len[" + e.HrefLength + "] \n");
+        }
+
+        private void textFieldAnchorTouched(object sender, TextField.AnchorTouchedEventArgs e)
+        {
+            Tizen.Log.Error("NUI", "FIELD Anchor TEXT[" + e.TextField.Text + "] \n");
+            Tizen.Log.Error("NUI", "FIELD Anchor HREF[" + e.Href + "] \n");
+            Tizen.Log.Error("NUI", "FIELD Anchor HREF Len[" + e.HrefLength + "] \n");
+        }
+
+        private void textEditorAnchorTouched(object sender, TextEditor.AnchorTouchedEventArgs e)
+        {
+            Tizen.Log.Error("NUI", "EDITOR Anchor TEXT[" + e.TextEditor.Text + "] \n");
+            Tizen.Log.Error("NUI", "EDITOR Anchor HREF[" + e.Href + "] \n");
+            Tizen.Log.Error("NUI", "EDITOR Anchor HREF Len[" + e.HrefLength + "] \n");
         }
 
         [STAThread]
