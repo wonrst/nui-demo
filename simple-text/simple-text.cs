@@ -91,41 +91,83 @@ namespace HelloWorldTest
             textFieldEllipsisTest.PointSize = 30.0f;
             textFieldEllipsisTest.Ellipsis = false;
             window.Add(textFieldEllipsisTest);
+            textFieldEllipsisTest.VerticalAlignment = VerticalAlignment.Center;
+            textFieldEllipsisTest.BackgroundColor = Color.Yellow;
+
+            PropertyMap PM1 = new PropertyMap();
+            PM1.Add("text", new PropertyValue("Placeholder Text"));
+            PM1.Add("textFocused", new PropertyValue("Focused"));
+            PM1.Add("color", new PropertyValue(Color.Red));
+            PM1.Add("fontFamily", new PropertyValue("Arial"));
+            PM1.Add("pointSize", new PropertyValue(15.0f));
+            
+            PropertyMap FM2 = new PropertyMap();
+            FM2.Add("weight", new PropertyValue("bold"));
+            FM2.Add("width", new PropertyValue("condensed"));
+            FM2.Add("slant", new PropertyValue("italic"));
+            PM1.Add("fontStyle", new PropertyValue(FM2));
+            
+            
+            textFieldEllipsisTest.Placeholder = PM1;
+
 
             TextField textFieldEllipsisTest2 = new TextField();
             textFieldEllipsisTest2.Text = "TextField Ellipsis Test, ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            textFieldEllipsisTest2.Size2D = new Size2D(200, 100);
+            textFieldEllipsisTest2.Size2D = new Size2D(150, 100);
             textFieldEllipsisTest2.Position2D = new Position2D(300, 150);
-            textFieldEllipsisTest2.PointSize = 30.0f;
+            textFieldEllipsisTest2.PointSize = 15.0f;
             textFieldEllipsisTest2.Ellipsis = true;
+            textFieldEllipsisTest2.BackgroundColor = Color.Yellow;
+
             window.Add(textFieldEllipsisTest2);
 
 
+            PropertyMap PM = new PropertyMap();
+            PM.Add("text", new PropertyValue("Setting Placeholder Text"));
+            PM.Add("textFocused", new PropertyValue("Setting Placeholder Text Focused"));
+            PM.Add("color", new PropertyValue(Color.Red));
+            PM.Add("fontFamily", new PropertyValue("Arial"));
+            PM.Add("pointSize", new PropertyValue(25.0f));
+            
+            PropertyMap FM = new PropertyMap();
+            FM.Add("weight", new PropertyValue("bold"));
+            FM.Add("width", new PropertyValue("condensed"));
+            FM.Add("slant", new PropertyValue("italic"));
+            PM.Add("fontStyle", new PropertyValue(FM));
+            
+            textFieldEllipsisTest2.Placeholder = PM;
+
+
+
             textFieldPlaceholderTest = new TextField();
+            //textFieldPlaceholderTest.VerticalAlignment = VerticalAlignment.Top;
+            //textFieldPlaceholderTest.VerticalAlignment = VerticalAlignment.Center;
+            textFieldPlaceholderTest.VerticalAlignment = VerticalAlignment.Bottom;
 
             PropertyMap propertyMap = new PropertyMap();
-            propertyMap.Add("placeholderText", new PropertyValue("TextField Placeholder Test"));
-            propertyMap.Add("placeholderTextFocused", new PropertyValue("Placeholder Text Focused"));
-            propertyMap.Add("placeholderColor", new PropertyValue(Color.Blue));
-            propertyMap.Add("placeholderPointSize", new PropertyValue(20.0f));
+            propertyMap.Add("text", new PropertyValue("TextField Placeholder Test"));
+            propertyMap.Add("textFocused", new PropertyValue("Placeholder Text Focused"));
+            propertyMap.Add("color", new PropertyValue(Color.Blue));
+            propertyMap.Add("pointSize", new PropertyValue(50.0f));
 
             PropertyMap fontStyleMap = new PropertyMap();
             fontStyleMap.Add("weight", new PropertyValue("bold"));
             fontStyleMap.Add("width", new PropertyValue("condensed"));
             fontStyleMap.Add("slant", new PropertyValue("italic"));
-            propertyMap.Add("placeholderFontStyle", new PropertyValue(fontStyleMap));
+            propertyMap.Add("fontStyle", new PropertyValue(fontStyleMap));
 
-            textFieldPlaceholderTest.Size2D = new Size2D(300, 50);
-            textFieldPlaceholderTest.Position2D = new Position2D(10, 230);
+            textFieldPlaceholderTest.Size2D = new Size2D(300, 100);
+            textFieldPlaceholderTest.Position2D = new Position2D(10, 260);
             textFieldPlaceholderTest.BackgroundColor = Color.Magenta;
             textFieldPlaceholderTest.Placeholder = propertyMap;
             textFieldPlaceholderTest.Focusable = true;
+            textFieldPlaceholderTest.PointSize = 30.0f;
             window.Add(textFieldPlaceholderTest);
 
             keySubclassTest = new TextLabel();
             keySubclassTest.Text = "Key Subclass Test!";
-            keySubclassTest.Size2D = new Size2D(900, 50);
-            keySubclassTest.Position2D = new Position2D(10, 300);
+            keySubclassTest.Size2D = new Size2D(30, 10);
+            keySubclassTest.Position2D = new Position2D(10, 400);
             keySubclassTest.BackgroundColor = Color.Cyan;
             keySubclassTest.PointSize = 20;
             keySubclassTest.Focusable = true;
@@ -171,9 +213,9 @@ namespace HelloWorldTest
             TextLabelLineWrapModeTest();
             ViewLayoutDirectionTest();
 
-            textFieldPlaceholderTest.DownFocusableView = keySubclassTest;
-            keySubclassTest.UpFocusableView = textFieldPlaceholderTest;
-            FocusManager.Instance.SetCurrentFocusView(keySubclassTest);
+            //textFieldPlaceholderTest.DownFocusableView = keySubclassTest;
+            //keySubclassTest.UpFocusableView = textFieldPlaceholderTest;
+            //FocusManager.Instance.SetCurrentFocusView(keySubclassTest);
         }
 
 
