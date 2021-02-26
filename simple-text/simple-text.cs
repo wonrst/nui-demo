@@ -48,13 +48,35 @@ namespace HelloWorldTest
             window.Add(myTextLabel);
 
             myTextLabel.Text = GetDate();
+
+            for (int i = 1 ; i < 20 ; i ++)
+            {
+                myTextLabel = new TextLabel("get date");
+                myTextLabel.Position2D = new Position2D(10, 70 + (i*30));
+                myTextLabel.PointSize = 20.0f;
+                window.Add(myTextLabel);
+                myTextLabel.Text = GetDate();
+            }
+
+            for (int i = 0 ; i < 20 ; i ++)
+            {
+                myTextLabel = new TextLabel("get date");
+                myTextLabel.Position2D = new Position2D(250, 70 + (i*30));
+                myTextLabel.PointSize = 20.0f;
+                window.Add(myTextLabel);
+                myTextLabel.Text = GetDate();
+            }
         }
 
         private string GetDate()
         {
             DateTime date = DateTime.Now.Date;
-            return date.ToString(" MMM ").ToUpper() + date.ToString("d일 dddd");
+            //return date.ToString(" MMM ").ToUpper() + date.ToString("d일 dddd");
             //return date.ToLongDateString();
+
+            return "\U0001f601";
+            //return "\ud83d\ude01";
+            
         }
 
 
