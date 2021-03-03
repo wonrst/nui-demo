@@ -32,21 +32,18 @@ namespace HelloWorldTest
         TextField newTextField;
         public bool hidden;
 
+        public View view;
+        public TextLabel label;
+        public TextLabel titleLabel;
+        public TextLabel artLabel;
+
         private TapGestureDetector tapGestureDetector;
 
         protected override void OnCreate()
         {
             base.OnCreate();
             Initialize();
-            //TestLog();
         }
-
-/*
-        public void TestLog()
-        {
-            Tizen.Log.Error("NUI", "view w " + view.Size2D.Width + " view h " + view.Size2D.Height + "\n");
-        }
-*/
 
         private void OnTapGestureDetected(object source, TapGestureDetector.DetectedEventArgs e)
         {
@@ -56,6 +53,52 @@ namespace HelloWorldTest
         private void LabelOnTapGestureDetected(object source, TapGestureDetector.DetectedEventArgs e)
         {
              Tizen.Log.Error("NUI", "label w " + e.View.Size2D.Width + " label h " + e.View.Size2D.Height + "\n");
+        }
+
+        private void View1OnTapGestureDetected(object source, TapGestureDetector.DetectedEventArgs e)
+        {
+             Tizen.Log.Error("NUI", "view w " + e.View.Size2D.Width + " view h " + e.View.Size2D.Height + "\n");
+
+             float h = view.GetHeightForWidth(400);
+
+             Tizen.Log.Error("NUI", "GetHeightForWidth " + h + "\n");
+        }
+
+        private void View2OnTapGestureDetected(object source, TapGestureDetector.DetectedEventArgs e)
+        {
+             Tizen.Log.Error("NUI", "titleLabel w " + e.View.Size2D.Width + " titleLabel h " + e.View.Size2D.Height + "\n");
+
+             float h = titleLabel.GetHeightForWidth(400);
+
+             Tizen.Log.Error("NUI", "GetHeightForWidth " + h + "\n");
+/*
+             if (h > 30)
+             {
+                 //view.Size2D = new Size2D(400, 110);
+
+                 titleLabel.Size2D = new Size2D(400, 60);
+                 titleLabel.Text = "Long Long Text Long Long Text Long Long Text Long Long Text Long Long Text Long Long Text Long Long Text";
+             }
+*/
+        }
+
+        private void View3OnTapGestureDetected(object source, TapGestureDetector.DetectedEventArgs e)
+        {
+             Tizen.Log.Error("NUI", "artLabel w " + e.View.Size2D.Width + " artLabel h " + e.View.Size2D.Height + "\n");
+
+             float h = artLabel.GetHeightForWidth(400);
+
+             Tizen.Log.Error("NUI", "GetHeightForWidth " + h + "\n");
+
+/*
+             if (h > 25)
+             {
+                 //view.Size2D = new Size2D(400, 110);
+
+                 artLabel.Size2D = new Size2D(400, 50);
+                 artLabel.Text = "Long Long Text Long Long Text Long Long Text Long Long Text Long Long Text Long Long Text Long Long Text";
+             }
+*/
         }
 
         public void Initialize()
@@ -69,112 +112,86 @@ namespace HelloWorldTest
                 Tizen.Log.Fatal("NUI", "Width: " + e.WindowSize.Width);
             };
 
-            View view = new View();
-            view.HeightResizePolicy = ResizePolicyType.FitToChildren;
+            view = new View()
+            {
+                Layout = new LinearLayout()
+                {
+                    LinearOrientation = LinearLayout.Orientation.Vertical,
+                    LinearAlignment = LinearLayout.Alignment.Begin,
+                    CellPadding = new Size2D(5, 5),
+                },
+                Margin = new Extents(0, 0, 18, 19),
+                HeightResizePolicy = ResizePolicyType.FitToChildren,
+                BackgroundColor = Color.Black,
+            };
+
             view.Position2D = new Position2D(10, 310);
-            //view.Margin = new Extents(0, 0, 18, 19);
+            //view.MinimumSize = new Size2D(400, 52);
+            //view.MaximumSize = new Size2D(400, 110);
+            window.Add(view);
 
-            view.Padding = new Extents(10, 10, 10, 10);
+            titleLabel = new TextLabel()
+            {
+                Text = "Short Text",
+                //Text = "Long Long Text Long Long Text Long Long Text Long Long Text Long Long Text Long Long Text Long Long Text",
+                //PointSize = 21,
+                PointSize = 19,
+                MultiLine = true,
+                Ellipsis = true,
+                BackgroundColor = Color.Cyan,
+            };
 
-            //view.Size2D = new Size2D(400, 30);
+            //titleLabel.Size2D = new Size2D(400, 60);
 
-            view.MinimumSize = new Size2D(400, 52);
-            view.MaximumSize = new Size2D(400, 110);
+            float h = titleLabel.GetHeightForWidth(400);
+            Tizen.Log.Error("NUI", "GetHeightForWidth " + h + "\n");
+            if (h > 30)
+               titleLabel.Size2D = new Size2D(400, 60);
+            else
+               titleLabel.Size2D = new Size2D(400, 30);
+
+
+            //titleLabel.MinimumSize = new Size2D(400, 30);
+            //titleLabel.MaximumSize = new Size2D(400, 60);
+            view.Add(titleLabel);
+
+            artLabel = new TextLabel()
+            {
+                //Text = "Short Text",
+                Text = "Long Long Text Long Long Text Long Long Text Long Long Text Long Long Text Long Long Text Long Long Text",
+                //PointSize = 17,
+                PointSize = 15,
+                MultiLine = true,
+                Ellipsis = true,
+                BackgroundColor = Color.Red,
+            };
+
+            //artLabel.Size2D = new Size2D(400, 50);
+            h = artLabel.GetHeightForWidth(400);
+            Tizen.Log.Error("NUI", "GetHeightForWidth " + h + "\n");
+            if (h > 25)
+                artLabel.Size2D = new Size2D(400, 50);
+            else
+                artLabel.Size2D = new Size2D(400, 25);
+
+
+            //artLabel.MinimumSize = new Size2D(400, 25);
+            //artLabel.MaximumSize = new Size2D(400, 50);
+            view.Add(artLabel);
 
 
             tapGestureDetector = new TapGestureDetector();
             tapGestureDetector.Attach(view);
-            tapGestureDetector.Detected += OnTapGestureDetected;
-
-            view.BackgroundColor = Color.Cyan;
-            /*
-            
-            view.Layout = new LinearLayout()
-            {
-                LinearOrientation = LinearLayout.Orientation.Vertical,
-            };
-            */
-            window.Add(view);
-
-
-            TextLabel label4;
-            label4 = new TextLabel("short text");
-            //label4 = new TextLabel("HELLOOOOOOOO5341 2 32");
-            //label4 = new TextLabel("middle text middle text middle text middle text middle text middle text ");
-            //label4 = new TextLabel("long text long text long text long text long text long text long text long text long text long text long text long text long text long text long text long text long text long text long text long text long text long text long text long text long text long text long text long text ");
-
-            //label4.WidthSpecification = LayoutParamPolicies.MatchParent;
-            //label4.HeightSpecification = LayoutParamPolicies.MatchParent;
-
-            //label4.Position2D = new Position2D(10, 310);
-            //label4.Size2D = new Size2D(400, 30);
-            //label4.EnableMarkup = true;
-            label4.PointSize = 17.0f;
-            label4.BackgroundColor = Color.Red;
-            label4.MinimumSize = new Size2D(200, 30);
-            label4.MaximumSize = new Size2D(400, 60);
-            //label4.AnchorTouched += textLabelAnchorTouched;
-            //label4.Size2D = new Size2D(400, 10);
-            //label4.MinimumSize = new Size2D(400, 30);
-            //label4.MaximumSize = new Size2D(400, 200);
-
-            label4.MultiLine = true;
-            label4.Ellipsis = true;
-            //label4.Ellipsis = false;
-
-            float h = label4.GetHeightForWidth(300);
-            Tizen.Log.Error("NUI", "GetHeightForWidth " + h + "\n");
-
+            tapGestureDetector.Detected += View1OnTapGestureDetected;
+    
+            tapGestureDetector = new TapGestureDetector();
+            tapGestureDetector.Attach(titleLabel);
+            tapGestureDetector.Detected += View2OnTapGestureDetected;
 
             tapGestureDetector = new TapGestureDetector();
-            tapGestureDetector.Attach(label4);
-            tapGestureDetector.Detected += LabelOnTapGestureDetected;
+            tapGestureDetector.Attach(artLabel);
+            tapGestureDetector.Detected += View3OnTapGestureDetected;
 
-
-
-            view.Add(label4);
-
-/*
-            label4.AnchorTouched += (sender, e) =>
-            {
-                Tizen.Log.Error("NUI", "view size " + view.Size2D.Width + " " + view.Size2D.Height + "\n");
-            };
-*/
-            Tizen.Log.Error("NUI", "LABEL size " + label4.Size2D.Width + " " + label4.Size2D.Height + "\n");
-            Tizen.Log.Error("NUI", "natural size " + label4.GetNaturalSize().Width + " " + label4.GetNaturalSize().Height + "\n");
-
-/*
-            if (label4.GetNaturalSize().Width < 400)
-              label4.Size2D = new Size2D(400, 30);
-s
-            else if (label4.GetNaturalSize().Width >= 400)
-              label4.Size2D = new Size2D(400, 60);
-*/
-
-
-        /// - enable (bool type) : True to enable the text fit or false to disable(the default value is false)<br />
-        /// - minSize (float type) : Minimum Size for text fit(the default value is 10.f)<br />
-        /// - maxSize (float type) : Maximum Size for text fit(the default value is 100.f)<br />
-        /// - stepSize (float type) : Step Size for font increase(the default value is 1.f)<br />
-        /// - fontSize (string type) 
-
-/*
-            PropertyMap textFit = new PropertyMap();
-            textFit.Add("enable", new PropertyValue("true"));
-            textFit.Add("minSize", new PropertyValue(10.0f));
-            textFit.Add("maxSize", new PropertyValue(100.0f));
-            label4.TextFit = textFit;
-*/
-/*
-            label4.AnchorTouched += (sender, e) =>
-            {
-               Tizen.Log.Info("NUI", e.Href + "\n");
-               Tizen.Log.Info("NUI", e.HrefLength + "\n");
-            };
-
-
-            window.Add(label4);
-*/
 
         }
 
