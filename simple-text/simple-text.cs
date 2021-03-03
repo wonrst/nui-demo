@@ -32,13 +32,31 @@ namespace HelloWorldTest
         TextField newTextField;
         public bool hidden;
 
+        private TapGestureDetector tapGestureDetector;
 
         protected override void OnCreate()
         {
             base.OnCreate();
             Initialize();
+            //TestLog();
         }
 
+/*
+        public void TestLog()
+        {
+            Tizen.Log.Error("NUI", "view w " + view.Size2D.Width + " view h " + view.Size2D.Height + "\n");
+        }
+*/
+
+        private void OnTapGestureDetected(object source, TapGestureDetector.DetectedEventArgs e)
+        {
+             Tizen.Log.Error("NUI", "view w " + e.View.Size2D.Width + " view h " + e.View.Size2D.Height + "\n");
+        }
+
+        private void LabelOnTapGestureDetected(object source, TapGestureDetector.DetectedEventArgs e)
+        {
+             Tizen.Log.Error("NUI", "label w " + e.View.Size2D.Width + " label h " + e.View.Size2D.Height + "\n");
+        }
 
         public void Initialize()
         {
@@ -51,115 +69,87 @@ namespace HelloWorldTest
                 Tizen.Log.Fatal("NUI", "Width: " + e.WindowSize.Width);
             };
 
-            TextLabel pointLabel;
-            pointLabel = new TextLabel("<b>Markup</b> TEST <shadow>SHADOW</shadow>");
-            pointLabel.Position2D = new Position2D(10, 10);
-            pointLabel.Size2D = new Size2D(400, 60);
-            pointLabel.EnableMarkup = true;
-
-            pointLabel.PointSize = 25.0f;
-            pointLabel.BackgroundColor = Color.Red;
-            window.Add(pointLabel);
-
-
-            TextLabel label2;
-            label2 = new TextLabel("tt <i>Italic</i> TEST <outline>OUTLINE</outline> aa");
-            label2.Position2D = new Position2D(10, 110);
-            label2.Size2D = new Size2D(400, 60);
-            label2.EnableMarkup = true;
-
-            label2.PointSize = 25.0f;
-            label2.BackgroundColor = Color.Blue;
-            window.Add(label2);
-
-
-            TextLabel label3;
-            label3 = new TextLabel("color <color=yellow>C O L O R</color> test");
-            label3.Position2D = new Position2D(10, 210);
-            label3.Size2D = new Size2D(400, 60);
-            label3.EnableMarkup = true;
-
-            label3.PointSize = 25.0f;
-            label3.BackgroundColor = Color.Red;
-            window.Add(label3);
-
-
-
-
-            TextField label5;
-            //label5 = new TextLabel("<item 'url'='icon.png' 'width'=24 'height'=24>Hello</item>");
-            //label5 = new TextLabel("Hello <item 'url'='icon.png' 'width'=24 'height'=24/>");
-
-            label5 = new TextField();
-            //label5.Text = "<a href='https://www.google.com'>google</a>";
-            label5.Text = "<a href='https://www.tizen.org'>TIZEN</a>";
-            //label5.Text = "hello <a href='https://www.naver.com'>naver</a>thisisisi<b>kknd</b>Hello hihi <a href='https://google.com'>google</a>hihi <b>wonrst..</b>!!! <a href='www.tizen.org'>tizen</a> !!!";
-            //label5.Text = "<a href='https://www.naver.com'>naver</a>thisisisi<b>kknd</b>Hello hihi <a href='https://google.com'>google</a>hihi <b>wonrst..</b>!!! <a href='www.tizen.org'>tizen</a> !!!";
-            
-            label5.Position2D = new Position2D(10, 410);
-            label5.Size2D = new Size2D(400, 60);
-            label5.EnableMarkup = true;
-            label5.MaxLength = 100;
-
-            label5.PointSize = 25.0f;
-            label5.BackgroundColor = Color.Yellow;
-
-            label5.AnchorTouched += textFieldAnchorTouched;
-
-            window.Add(label5);
-
-
-
-
             View view = new View();
             view.HeightResizePolicy = ResizePolicyType.FitToChildren;
             view.Position2D = new Position2D(10, 310);
-            view.MinimumSize = new Size2D(400, 30);
-            view.MaximumSize = new Size2D(400, 100);
+            //view.Margin = new Extents(0, 0, 18, 19);
+
+            view.Padding = new Extents(10, 10, 10, 10);
+
+            //view.Size2D = new Size2D(400, 30);
+
+            view.MinimumSize = new Size2D(400, 52);
+            view.MaximumSize = new Size2D(400, 110);
+
+
+            tapGestureDetector = new TapGestureDetector();
+            tapGestureDetector.Attach(view);
+            tapGestureDetector.Detected += OnTapGestureDetected;
+
             view.BackgroundColor = Color.Cyan;
+            /*
+            
+            view.Layout = new LinearLayout()
+            {
+                LinearOrientation = LinearLayout.Orientation.Vertical,
+            };
+            */
             window.Add(view);
 
 
             TextLabel label4;
-            //label4 = new TextLabel("<a>www.hyperlink.com</a>");
+            label4 = new TextLabel("short text");
+            //label4 = new TextLabel("HELLOOOOOOOO5341 2 32");
+            //label4 = new TextLabel("middle text middle text middle text middle text middle text middle text ");
+            //label4 = new TextLabel("long text long text long text long text long text long text long text long text long text long text long text long text long text long text long text long text long text long text long text long text long text long text long text long text long text long text long text long text ");
 
-            //label4 = new TextLabel("<a href='https://www.google.com'>google</a>");
-
-            //label4 = new TextLabel("<a href='https://review.tizen.org/gerrit/#/c/platform/core/uifw/dali-toolkit/+/252201/'>gogle</a>");
-
-
-            label4 = new TextLabel("hello <a href='https://www.naver.com'>naver</a> thisisisi <b>kknd</b>Hello hihi <a href='https://google.com'>google</a>hihi <b> wonrst.. </b>!!! <a href='www.tizen.org'>tizen</a> !!!");
-            //label4 = new TextLabel("<a href='https://google.com'/>");
+            //label4.WidthSpecification = LayoutParamPolicies.MatchParent;
+            //label4.HeightSpecification = LayoutParamPolicies.MatchParent;
 
             //label4.Position2D = new Position2D(10, 310);
-            //label4.Size2D = new Size2D(400, 100);
-            label4.EnableMarkup = true;
+            //label4.Size2D = new Size2D(400, 30);
+            //label4.EnableMarkup = true;
             label4.PointSize = 17.0f;
             label4.BackgroundColor = Color.Red;
-            label4.AnchorTouched += textLabelAnchorTouched;
+            label4.MinimumSize = new Size2D(200, 30);
+            label4.MaximumSize = new Size2D(400, 60);
+            //label4.AnchorTouched += textLabelAnchorTouched;
             //label4.Size2D = new Size2D(400, 10);
             //label4.MinimumSize = new Size2D(400, 30);
             //label4.MaximumSize = new Size2D(400, 200);
 
-            label4.Ellipsis = true;
             label4.MultiLine = true;
+            label4.Ellipsis = true;
+            //label4.Ellipsis = false;
+
+            float h = label4.GetHeightForWidth(300);
+            Tizen.Log.Error("NUI", "GetHeightForWidth " + h + "\n");
+
+
+            tapGestureDetector = new TapGestureDetector();
+            tapGestureDetector.Attach(label4);
+            tapGestureDetector.Detected += LabelOnTapGestureDetected;
+
+
 
             view.Add(label4);
 
+/*
             label4.AnchorTouched += (sender, e) =>
             {
                 Tizen.Log.Error("NUI", "view size " + view.Size2D.Width + " " + view.Size2D.Height + "\n");
             };
-
+*/
             Tizen.Log.Error("NUI", "LABEL size " + label4.Size2D.Width + " " + label4.Size2D.Height + "\n");
             Tizen.Log.Error("NUI", "natural size " + label4.GetNaturalSize().Width + " " + label4.GetNaturalSize().Height + "\n");
 
+/*
             if (label4.GetNaturalSize().Width < 400)
               label4.Size2D = new Size2D(400, 30);
-
+s
             else if (label4.GetNaturalSize().Width >= 400)
               label4.Size2D = new Size2D(400, 60);
-
+*/
 
 
         /// - enable (bool type) : True to enable the text fit or false to disable(the default value is false)<br />
@@ -186,80 +176,6 @@ namespace HelloWorldTest
             window.Add(label4);
 */
 
-            TextEditor label6;
-            label6 = new TextEditor();
-            //label5.Text = "<a href='https://www.google.com'>google</a>";
-            label6.Text = "hello <a href='https://www.naver.com'>naver</a>thisisisi<b>kknd</b>Hello hihi <a href='https://google.com'>google</a>hihi <b>wonrst..</b>!!! <a href='www.tizen.org'>tizen</a> 2312329183210 wewkmkewmekwqmekwqmf wqemkqwemkwm <a>TEST</a> hell.... <a href='wonrst.com'>wonrst</a> qwerdf";
-            label6.Position2D = new Position2D(10, 510);
-            label6.Size2D = new Size2D(400, 300);
-            label6.EnableMarkup = true;
-
-
-/*
-            label6.Text = "statement";
-            label6.Position2D = new Position2D(10, 510);
-            label6.Size2D = new Size2D(70, 300);
-*/
-            label6.PointSize = 25.0f;
-            label6.BackgroundColor = Color.Green;
-
-            label6.AnchorTouched += textEditorAnchorTouched;
-            label6.LineWrapMode = LineWrapMode.Word;
-            
-            window.Add(label6);
-
-
-
-
-
-
-
-/*
-            TextLabel label5;
-            label5 = new TextLabel("https://google.com");
-
-            label5.Position2D = new Position2D(10, 410);
-            label5.Size2D = new Size2D(400, 60);
-            label5.TextColor = Color.Cyan;
-            
-            PropertyMap underline = new PropertyMap();
-            underline.Add("enable", new PropertyValue("true"));
-            underline.Add("color", new PropertyValue(Color.Cyan));
-            underline.Add("height", new PropertyValue(2.0f));
-            label5.Underline = underline;
-
-            label5.PointSize = 25.0f;
-            label5.BackgroundColor = Color.White;
-            window.Add(label5);
-*/
-        }
-
-        private void textLabelAnchorTouched(object sender, TextLabel.AnchorTouchedEventArgs e)
-        {
-            Tizen.Log.Error("NUI", "LABEL Anchor TEXT[" + e.TextLabel.Text + "] \n");
-            Tizen.Log.Error("NUI", "LABEL Anchor HREF[" + e.Href + "] \n");
-            Tizen.Log.Error("NUI", "LABEL Anchor HREF Len[" + e.HrefLength + "] \n");
-
-
-            Tizen.Log.Error("NUI", "LABEL size " + e.TextLabel.Size2D.Width + " " + e.TextLabel.Size2D.Height + "\n");
-            Tizen.Log.Error("NUI", "natural size " + e.TextLabel.GetNaturalSize().Width + " " + e.TextLabel.GetNaturalSize().Height + "\n");
-        }
-
-        private void textFieldAnchorTouched(object sender, TextField.AnchorTouchedEventArgs e)
-        {
-            Tizen.Log.Error("NUI", "FIELD Anchor TEXT[" + e.TextField.Text + "] \n");
-            Tizen.Log.Error("NUI", "FIELD Anchor HREF[" + e.Href + "] \n");
-            Tizen.Log.Error("NUI", "FIELD Anchor HREF Len[" + e.HrefLength + "] \n");
-        }
-
-        private void textEditorAnchorTouched(object sender, TextEditor.AnchorTouchedEventArgs e)
-        {
-            Tizen.Log.Error("NUI", "EDITOR Anchor TEXT[" + e.TextEditor.Text + "] \n");
-            Tizen.Log.Error("NUI", "EDITOR Anchor HREF[" + e.Href + "] \n");
-            Tizen.Log.Error("NUI", "EDITOR Anchor HREF Len[" + e.HrefLength + "] \n");
-
-            Tizen.Log.Error("NUI", "EDITOR size " + e.TextEditor.Size2D.Width + " " + e.TextEditor.Size2D.Height + "\n");
-            Tizen.Log.Error("NUI", "natural size " + e.TextEditor.GetNaturalSize().Width + " " + e.TextEditor.GetNaturalSize().Height + "\n");
         }
 
         [STAThread]
