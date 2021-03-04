@@ -93,6 +93,7 @@ namespace HelloWorldTest
             textFieldEllipsisTest.VerticalAlignment = VerticalAlignment.Center;
             textFieldEllipsisTest.BackgroundColor = Color.Yellow;
 
+/*
             PropertyMap PM1 = new PropertyMap();
             PM1.Add("text", new PropertyValue("Placeholder Text"));
             PM1.Add("textFocused", new PropertyValue("Focused"));
@@ -106,8 +107,34 @@ namespace HelloWorldTest
             FM2.Add("slant", new PropertyValue("italic"));
             PM1.Add("fontStyle", new PropertyValue(FM2));
             
-            
             textFieldEllipsisTest.Placeholder = PM1;
+*/
+
+/*
+            textFieldEllipsisTest.PlaceholderText = "HELLO";
+            textFieldEllipsisTest.PlaceholderTextFocused = "FOCUSED";
+
+
+            if (NUIApplication.MultilingualResourceManager != null)
+            {
+                textFieldEllipsisTest.TranslatablePlaceholderText = "TextField";
+                string translatablePlaceholderText = textFieldEllipsisTest.TranslatablePlaceholderText;
+
+                Tizen.Log.Fatal("NUI", "is MultilingualResourceManager \n");
+            }
+            else
+            {
+                Tizen.Log.Fatal("NUI", "NULL MultilingualResourceManager \n");
+            }
+
+
+            //textFieldEllipsisTest.TranslatableText = "TEXT";
+            textFieldEllipsisTest.TranslatablePlaceholderTextFocused = "TextField Focused";
+            */
+
+            //textFieldEllipsisTest.TranslatablePlaceholderText = "test";
+
+
 
 
             TextField textFieldEllipsisTest2 = new TextField();
@@ -119,7 +146,7 @@ namespace HelloWorldTest
 
             window.Add(textFieldEllipsisTest2);
 
-
+/*
             PropertyMap PM = new PropertyMap();
             PM.Add("text", new PropertyValue("Setting Placeholder Text"));
             PM.Add("textFocused", new PropertyValue("Setting Placeholder Text Focused"));
@@ -134,6 +161,9 @@ namespace HelloWorldTest
             PM.Add("fontStyle", new PropertyValue(FM));
             
             textFieldEllipsisTest2.Placeholder = PM;
+*/
+            textFieldEllipsisTest2.PlaceholderText = "HELLO";
+            textFieldEllipsisTest2.PlaceholderTextFocused = "FOCUSED";
 
 
 
@@ -141,7 +171,7 @@ namespace HelloWorldTest
             //textFieldPlaceholderTest.VerticalAlignment = VerticalAlignment.Top;
             //textFieldPlaceholderTest.VerticalAlignment = VerticalAlignment.Center;
             textFieldPlaceholderTest.VerticalAlignment = VerticalAlignment.Bottom;
-
+/*
             PropertyMap propertyMap = new PropertyMap();
             propertyMap.Add("text", new PropertyValue("TextField Placeholder Test"));
             propertyMap.Add("textFocused", new PropertyValue("Placeholder Text Focused"));
@@ -154,13 +184,21 @@ namespace HelloWorldTest
             fontStyleMap.Add("slant", new PropertyValue("italic"));
             propertyMap.Add("fontStyle", new PropertyValue(fontStyleMap));
 
+            textFieldPlaceholderTest.Placeholder = propertyMap;
+*/
+
+            textFieldPlaceholderTest.PlaceholderText = "HELLO";
+            textFieldPlaceholderTest.PlaceholderTextFocused = "FOCUSED";
+
             textFieldPlaceholderTest.Size2D = new Size2D(300, 100);
             textFieldPlaceholderTest.Position2D = new Position2D(10, 260);
             textFieldPlaceholderTest.BackgroundColor = Color.Magenta;
-            textFieldPlaceholderTest.Placeholder = propertyMap;
+
             textFieldPlaceholderTest.Focusable = true;
             textFieldPlaceholderTest.PointSize = 30.0f;
             window.Add(textFieldPlaceholderTest);
+
+
 
             keySubclassTest = new TextLabel();
             keySubclassTest.Text = "Key Subclass Test!";
