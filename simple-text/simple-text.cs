@@ -85,7 +85,6 @@ namespace HelloWorldTest
             }).Wait();
 */
             TextField textFieldEllipsisTest = new TextField();
-            textFieldEllipsisTest.Text = "TextField Ellipsis Test, ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             textFieldEllipsisTest.Size2D = new Size2D(200, 100);
             textFieldEllipsisTest.Position2D = new Position2D(10, 150);
             textFieldEllipsisTest.PointSize = 30.0f;
@@ -112,7 +111,6 @@ namespace HelloWorldTest
 
 
             TextField textFieldEllipsisTest2 = new TextField();
-            textFieldEllipsisTest2.Text = "TextField Ellipsis Test, ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             textFieldEllipsisTest2.Size2D = new Size2D(150, 100);
             textFieldEllipsisTest2.Position2D = new Position2D(300, 150);
             textFieldEllipsisTest2.PointSize = 15.0f;
