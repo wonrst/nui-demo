@@ -96,7 +96,7 @@ namespace HelloWorldTest
 
             PropertyMap PM1 = new PropertyMap();
             PM1.Add("text", new PropertyValue("Placeholder Text"));
-            PM1.Add("textFocused", new PropertyValue("Focused"));
+            //PM1.Add("textFocused", new PropertyValue("Focused"));
             PM1.Add("color", new PropertyValue(Color.Red));
             PM1.Add("fontFamily", new PropertyValue("Arial"));
             PM1.Add("pointSize", new PropertyValue(15.0f));
@@ -369,6 +369,31 @@ namespace HelloWorldTest
             myTextEditor.LineWrapMode = LineWrapMode.Character;
             myTextEditor.Text = $"[TextEditor LineWrapMode.Character] hello ABCDEFGHI is my name, it is very very long beautiful hansome awesome name.";
             Window.Instance.GetDefaultLayer().Add(myTextEditor);
+            myTextEditor.PlaceholderText = "Test";
+
+
+            PropertyMap PM = new PropertyMap();
+            PM.Add("text", new PropertyValue("Setting Placeholder Text"));
+            PM.Add("textFocused", new PropertyValue("Focused"));
+            PM.Add("color", new PropertyValue(Color.White));
+            PM.Add("fontFamily", new PropertyValue("Arial"));
+            PM.Add("pointSize", new PropertyValue(50.0f));
+            
+            PropertyMap FM = new PropertyMap();
+            FM.Add("weight", new PropertyValue("bold"));
+            FM.Add("width", new PropertyValue("condensed"));
+            FM.Add("slant", new PropertyValue("italic"));
+            PM.Add("fontStyle", new PropertyValue(FM));
+            
+            myTextEditor.Placeholder = PM;
+
+            //myTextEditor.PlaceholderText = "HELLo";
+            //myTextEditor.PlaceholderTextFocused = "hi";
+
+
+
+
+
 
             myTextEditor2 = new TextEditor();
             myTextEditor2.Position2D = new Position2D(450, 700);
