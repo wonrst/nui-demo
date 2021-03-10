@@ -54,10 +54,20 @@ namespace HelloWorldTest
             button.Position2D = new Position2D(10, 10);
             button.Clicked += (obj, e) =>
             {                
-                Tizen.Log.Fatal("NUI", "GetNaturalSize : W " + editor.GetNaturalSize().Width + " H " + editor.GetNaturalSize().Height + " L " + editor.LineCount + "\n");
+                Tizen.Log.Fatal("NUI", "GetNaturalSize : W " + editor.GetNaturalSize().Width + " H " + editor.GetNaturalSize().Height + "\n");
             };
             window.Add(button);
-        }
+
+            button = new Button();
+            button.Size2D = new Size2D(50, 50);
+            button.Position2D = new Position2D(70, 10);
+            button.Clicked += (obj, e) =>
+            {                
+                Tizen.Log.Fatal("NUI", "Line " + editor.LineCount + "\n");
+            };
+            window.Add(button);
+
+        }        
 
         [STAThread]
         static void Main(string[] args)
