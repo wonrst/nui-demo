@@ -42,11 +42,16 @@ namespace HelloWorldTest
             };
 
             TextEditor editor = new TextEditor();
-            editor.Text = "a\nb\nc\nd\ne\nf\nghijklmnopqrstuvwxyz abcdefghijklmnopqrstuvwxyz\n";
+            editor.Text = "Hello World";
             editor.Size2D = new Size2D(400, 500);
             editor.Position2D = new Position2D(10, 150);
             editor.PointSize = 30.0f;
             window.Add(editor);
+
+            //editor.PrimaryCursorPosition = 0;
+            editor.SelectedTextStart = 0;
+            editor.SelectedTextEnd = 4;
+            Tizen.Log.Fatal("NUI", "START cursor : " + editor.PrimaryCursorPosition + " select : " + editor.SelectedTextStart + " ~ " + editor.SelectedTextEnd + "\n");
 
 
             Button button = new Button();
@@ -54,7 +59,9 @@ namespace HelloWorldTest
             button.Position2D = new Position2D(10, 10);
             button.Clicked += (obj, e) =>
             {                
-                Tizen.Log.Fatal("NUI", "GetNaturalSize : W " + editor.GetNaturalSize().Width + " H " + editor.GetNaturalSize().Height + "\n");
+                editor.SelectedTextStart = 0;
+                editor.SelectedTextEnd = 4;
+                Tizen.Log.Fatal("NUI", "cursor : " + editor.PrimaryCursorPosition + " select : " + editor.SelectedTextStart + " ~ " + editor.SelectedTextEnd + "\n");
             };
             window.Add(button);
 
@@ -62,10 +69,36 @@ namespace HelloWorldTest
             button.Size2D = new Size2D(50, 50);
             button.Position2D = new Position2D(70, 10);
             button.Clicked += (obj, e) =>
-            {                
-                Tizen.Log.Fatal("NUI", "Line " + editor.LineCount + "\n");
+            {
+                editor.SelectedTextStart ++;
+                editor.SelectedTextEnd ++;
+                Tizen.Log.Fatal("NUI", "cursor : " + editor.PrimaryCursorPosition + " select : " + editor.SelectedTextStart + " ~ " + editor.SelectedTextEnd + "\n");
             };
             window.Add(button);
+
+            button = new Button();
+            button.Size2D = new Size2D(50, 50);
+            button.Position2D = new Position2D(130, 10);
+            button.Clicked += (obj, e) =>
+            {
+                editor.SelectedTextStart = editor.PrimaryCursorPosition;
+                editor.SelectedTextEnd = editor.PrimaryCursorPosition;
+                Tizen.Log.Fatal("NUI", "cursor : " + editor.PrimaryCursorPosition + " select : " + editor.SelectedTextStart + " ~ " + editor.SelectedTextEnd + "\n");
+            };
+            window.Add(button);
+
+
+
+            editor = new TextEditor();
+            editor.Text = "Second text editor";
+            editor.Size2D = new Size2D(400, 500);
+            editor.Position2D = new Position2D(10, 700);
+            editor.PointSize = 30.0f;
+            window.Add(editor);
+
+            //editor.PrimaryCursorPosition = 0;
+            editor.SelectedTextStart = 0;
+            editor.SelectedTextEnd = 4;
 
         }        
 
