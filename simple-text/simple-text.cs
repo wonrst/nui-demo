@@ -120,77 +120,93 @@ namespace HelloWorldTest
                     LinearAlignment = LinearLayout.Alignment.Begin,
                     CellPadding = new Size2D(5, 5),
                 },
-                Margin = new Extents(0, 0, 18, 19),
-                HeightResizePolicy = ResizePolicyType.FitToChildren,
                 BackgroundColor = Color.Black,
             };
 
             view.Position2D = new Position2D(10, 310);
-            //view.MinimumSize = new Size2D(400, 52);
-            //view.MaximumSize = new Size2D(400, 110);
+            view.Size2D = new Size2D(400, 400);
             window.Add(view);
 
-            titleLabel = new TextLabel()
+            View innerView = new View()
             {
-                Text = "Short Text",
-                //Text = "Long Long Text Long Long Text Long Long Text Long Long Text Long Long Text Long Long Text Long Long Text",
-                //PointSize = 21,
-                PointSize = 19,
-                MultiLine = true,
-                Ellipsis = true,
-                BackgroundColor = Color.Cyan,
+                WidthSpecification = LayoutParamPolicies.MatchParent,
+                Layout = new LinearLayout()
+                {
+                    LinearOrientation = LinearLayout.Orientation.Vertical,
+                    LinearAlignment = LinearLayout.Alignment.Begin,
+                },
+                BackgroundColor = Color.Black,
             };
-
-            //titleLabel.Size2D = new Size2D(400, 60);
-
-            float h = titleLabel.GetHeightForWidth(400);
-            Tizen.Log.Error("NUI", "GetHeightForWidth " + h + "\n");
-            if (h > 30)
-               titleLabel.Size2D = new Size2D(400, 60);
-            else
-               titleLabel.Size2D = new Size2D(400, 30);
-
-
-            //titleLabel.MinimumSize = new Size2D(400, 30);
-            //titleLabel.MaximumSize = new Size2D(400, 60);
-            view.Add(titleLabel);
+            view.Add(innerView);
 
             artLabel = new TextLabel()
             {
-                //Text = "Short Text",
-                Text = "Long Long Text Long Long Text Long Long Text Long Long Text Long Long Text Long Long Text Long Long Text",
-                //PointSize = 17,
+                Text = "Left aligned",
                 PointSize = 15,
                 MultiLine = true,
                 Ellipsis = true,
                 BackgroundColor = Color.Red,
+                //HorizontalAlignment = HorizontalAlignment.End,
             };
+            innerView.Add(artLabel);
 
-            //artLabel.Size2D = new Size2D(400, 50);
-            h = artLabel.GetHeightForWidth(400);
-            Tizen.Log.Error("NUI", "GetHeightForWidth " + h + "\n");
-            if (h > 25)
-                artLabel.Size2D = new Size2D(400, 50);
-            else
-                artLabel.Size2D = new Size2D(400, 25);
+            innerView = new View()
+            {
+                WidthSpecification = LayoutParamPolicies.MatchParent,
+                Layout = new LinearLayout()
+                {
+                    LinearOrientation = LinearLayout.Orientation.Vertical,
+                    LinearAlignment = LinearLayout.Alignment.Center,
+                },
+                BackgroundColor = Color.Black,
+            };
+            view.Add(innerView);
+
+            artLabel = new TextLabel()
+            {
+                Text = "Center aligned",
+                PointSize = 15,
+                MultiLine = true,
+                Ellipsis = true,
+                BackgroundColor = Color.Red,
+                //HorizontalAlignment = HorizontalAlignment.Center,
+            };
+            innerView.Add(artLabel);
+
+            innerView = new View()
+            {
+                WidthSpecification = LayoutParamPolicies.MatchParent,
+                Layout = new LinearLayout()
+                {
+                    LinearOrientation = LinearLayout.Orientation.Vertical,
+                    LinearAlignment = LinearLayout.Alignment.End,
+                },
+                BackgroundColor = Color.Black,
+            };
+            view.Add(innerView);
+
+            artLabel = new TextLabel()
+            {
+                Text = "Right aligned",
+                PointSize = 15,
+                MultiLine = true,
+                Ellipsis = true,
+                BackgroundColor = Color.Red,
+                //HorizontalAlignment = HorizontalAlignment.Begin,
+            };
+            innerView.Add(artLabel);
 
 
-            //artLabel.MinimumSize = new Size2D(400, 25);
-            //artLabel.MaximumSize = new Size2D(400, 50);
+            artLabel = new TextLabel()
+            {
+                Text = "FILL",
+                PointSize = 15,
+                MultiLine = true,
+                Ellipsis = true,
+                BackgroundColor = Color.Red,
+                WidthSpecification = LayoutParamPolicies.MatchParent,
+            };
             view.Add(artLabel);
-
-
-            tapGestureDetector = new TapGestureDetector();
-            tapGestureDetector.Attach(view);
-            tapGestureDetector.Detected += View1OnTapGestureDetected;
-    
-            tapGestureDetector = new TapGestureDetector();
-            tapGestureDetector.Attach(titleLabel);
-            tapGestureDetector.Detected += View2OnTapGestureDetected;
-
-            tapGestureDetector = new TapGestureDetector();
-            tapGestureDetector.Attach(artLabel);
-            tapGestureDetector.Detected += View3OnTapGestureDetected;
 
 
         }
