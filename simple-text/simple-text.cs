@@ -19,6 +19,7 @@ using System;
 using System.Threading.Tasks;
 using Tizen.NUI;
 using Tizen.NUI.BaseComponents;
+using Tizen.NUI.Components;
 
 namespace HelloWorldTest
 {
@@ -48,21 +49,52 @@ namespace HelloWorldTest
             textField.Text = "TextField Ellipsis Test, ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             textField.Size2D = new Size2D(400, 100);
             textField.Position2D = new Position2D(10, 150);
-            textField.PointSize = 30.0f;
+            textField.PointSize = 25.0f;
             textField.Ellipsis = false;
             textField.TextColor = Color.White;
             textField.BackgroundColor = Color.Black;
+            textField.VerticalAlignment = VerticalAlignment.Center;
             window.Add(textField);
 
             TextField textField2 = new TextField();
             textField2.Text = "TextField Ellipsis Test, ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             textField2.Size2D = new Size2D(400, 100);
             textField2.Position2D = new Position2D(10, 300);
-            textField2.PointSize = 30.0f;
+            textField2.PointSize = 25.0f;
             textField2.Ellipsis = true;
             textField2.TextColor = Color.White;
             textField2.BackgroundColor = Color.Black;
+            textField2.VerticalAlignment = VerticalAlignment.Center;
             window.Add(textField2);
+
+
+            Button button = new Button();
+            button.Size2D = new Size2D(50, 50);
+            button.Position2D = new Position2D(10, 10);
+            button.Clicked += (obj, e) =>
+            {
+                textField.Size2D = new Size2D(100, 50);
+            };
+            window.Add(button);
+
+            button = new Button();
+            button.Size2D = new Size2D(50, 50);
+            button.Position2D = new Position2D(70, 10);
+            button.Clicked += (obj, e) =>
+            {
+                textField.Size2D = new Size2D(200, 75);
+            };
+            window.Add(button);
+
+            button = new Button();
+            button.Size2D = new Size2D(50, 50);
+            button.Position2D = new Position2D(130, 10);
+            button.Clicked += (obj, e) =>
+            {
+                textField.Size2D = new Size2D(400, 100);
+            };
+            window.Add(button);
+
         }
 
         [STAThread]
